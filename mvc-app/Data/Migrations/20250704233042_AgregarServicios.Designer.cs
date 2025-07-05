@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mvc_app.Data;
 
@@ -10,9 +11,11 @@ using mvc_app.Data;
 namespace mvc_app.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704233042_AgregarServicios")]
+    partial class AgregarServicios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -280,38 +283,6 @@ namespace mvc_app.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TurneroApp.Models.Tarjeta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("NombreTitular")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NumeroEnmascarado")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Ultimos4Digitos")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Vencimiento")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Tarjetas");
-                });
-
             modelBuilder.Entity("TurneroApp.Models.Turno", b =>
                 {
                     b.Property<int>("Id")
@@ -324,12 +295,6 @@ namespace mvc_app.Data.Migrations
                     b.Property<DateTime>("FechaHora")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MetodoPago")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("MontoTotal")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("QrExpiracion")
                         .HasColumnType("TEXT");
 
@@ -337,15 +302,10 @@ namespace mvc_app.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("TarjetaId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("UsuarioId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TarjetaId");
 
                     b.HasIndex("UsuarioId");
 
@@ -449,28 +409,13 @@ namespace mvc_app.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TurneroApp.Models.Tarjeta", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TurneroApp.Models.Turno", b =>
                 {
-                    b.HasOne("TurneroApp.Models.Tarjeta", "Tarjeta")
-                        .WithMany()
-                        .HasForeignKey("TarjetaId");
-
                     b.HasOne("TurneroApp.Models.Usuario", "Usuario")
                         .WithMany("Turnos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Tarjeta");
 
                     b.Navigation("Usuario");
                 });

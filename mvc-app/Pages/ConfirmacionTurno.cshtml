@@ -1,0 +1,32 @@
+@page "{id:int}"
+@model ConfirmacionTurnoModel
+@{
+    ViewData["Title"] = "Turno confirmado";
+}
+
+<h1>¡Turno confirmado!</h1>
+
+<p><strong>Fecha:</strong> @Model.Turno.FechaHora.ToString("g")</p>
+<p><strong>Servicios:</strong></p>
+<ul>
+@foreach (var s in Model.Servicios)
+{
+    <li>@s.Nombre - $@s.Precio</li>
+}
+</ul>
+<p><strong>Método de pago:</strong> @Model.Turno.MetodoPago</p>
+
+@if (Model.Turno.MetodoPago == TurneroApp.Models.MetodoPago.Efectivo)
+{
+    <p><strong>Total a pagar:</strong> $@Model.Turno.MontoTotal</p>
+}
+
+<h3>QR de confirmación:</h3>
+@if (!string.IsNullOrEmpty(Model.QrImageBase64))
+{
+    <img src="data:image/png;base64,@Model.QrImageBase64" alt="QR Turno" />
+}
+else
+{
+    <p>Error al generar el código QR.</p>
+}

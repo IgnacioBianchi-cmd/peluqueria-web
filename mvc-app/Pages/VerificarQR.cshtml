@@ -1,0 +1,19 @@
+@page
+@model VerificarQRModel
+@{
+    ViewData["Title"] = "Verificación de QR";
+}
+
+<h1>Verificación de Turno</h1>
+
+@if (Model.TurnoValido)
+{
+    <p>✅ El turno es válido.</p>
+    <p><strong>Usuario:</strong> @Model.NombreUsuario</p>
+    <p><strong>Fecha del turno:</strong> @Model.FechaTurno.ToString("g")</p>
+    <p><strong>Estado:</strong> @Model.EstadoTurno</p>
+}
+else
+{
+    <p>❌ QR inválido o expirado.</p>
+}

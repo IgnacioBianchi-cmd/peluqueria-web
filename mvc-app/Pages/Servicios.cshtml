@@ -1,0 +1,24 @@
+@page
+@model ServiciosModel
+@{
+    ViewData["Title"] = "Seleccionar servicios";
+}
+
+<h1>Seleccioná los servicios que deseas reservar</h1>
+
+<form method="post">
+    <div>
+        @foreach (var servicio in Model.Servicios)
+        {
+            <div>
+                <input type="checkbox" name="ServiciosSeleccionados" value="@servicio.Id" id="servicio_@servicio.Id" />
+                <label for="servicio_@servicio.Id">
+                    <strong>@servicio.Nombre</strong> - @servicio.Descripcion<br />
+                    Precio: $@servicio.Precio - Duración: @servicio.Duracion.TotalMinutes minutos
+                </label>
+            </div>
+        }
+    </div>
+
+    <button type="submit">Continuar</button>
+</form>

@@ -1,0 +1,81 @@
+@page
+@model CrearTurnoModel
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Crear Turno";
+    var minDate = DateTime.Now.AddHours(24).ToString("yyyy-MM-ddTHH:mm");
+}
+
+<h1>Crear Turno</h1>
+
+<form method="post">
+    <h3>Servicios seleccionados:</h3>
+    <ul>
+        @foreach (var servicio in Model.Servicios)
+        {
+            <li><strong>@servicio.Nombre</strong> - $@servicio.Precio - @servicio.Duracion.TotalMinutes min</li>
+        }
+    </ul>
+
+    <div>
+        <label>Fecha y hora del turno:</label>
+        <input type="datetime-local" asp-for="FechaHora" min="@minDate" required />
+    </div>
+
+    <div>
+        <label>Método de pago:</label><br />
+        <input type="radio" id="efectivo" name="MetodoPago" value="Efectivo" checked />
+        <label for="efectivo">Efectivo</label><br />
+        <input type="radio" id="tarjeta" name="MetodoPago" value="Tarjeta" />
+        <label for="tarjeta">Tarjeta</label>
+    </div>
+
+    <div id="tarjetaSection" style="display: none;">
+        <label for="TarjetaId">Seleccionar tarjeta guardada:</label>
+        <select asp-for="TarjetaId">
+            <option value="">-- Ingresar nueva tarjeta --</option>
+            @foreach (var t in Model.TarjetasGuardadas)
+            {
+                <option value="@t.Id">**** **** **** @t.Ultimos4Digitos - @t.NombreTitular</option>
+            }
+        </select>
+
+        <h4>O ingresar nueva tarjeta:</h4>
+        <div>
+            <label for="NuevaTarjetaNumero">Número:</label>
+            <input type="text" name="NuevaTarjetaNumero" maxlength="16" pattern="\d{16}" />
+        </div>
+        <div>
+            <label for="NuevaTarjetaNombre">Nombre del titular:</label>
+            <input type="text" name="NuevaTarjetaNombre" />
+        </div>
+        <div>
+            <label for="NuevaTarjetaVencimiento">Vencimiento:</label>
+            <input type="month" name="NuevaTarjetaVencimiento" />
+        </div>
+        <div>
+            <input type="checkbox" name="GuardarTarjeta" id="GuardarTarjeta" />
+            <label for="GuardarTarjeta">Guardar esta tarjeta</label>
+        </div>
+    </div>
+
+    <input type="hidden" name="IdsServicios" value="@Model.IdsServicios" />
+    <button type="submit">Confirmar Turno</button>
+</form>
+
+@section Scripts {
+<script>
+    const efectivo = document.getElementById("efectivo");
+    const tarjeta = document.getElementById("tarjeta");
+    const tarjetaSection = document.getElementById("tarjetaSection");
+
+    function toggleTarjeta() {
+        tarjetaSection.style.display = tarjeta.checked ? "block" : "none";
+    }
+
+    efectivo.addEventListener("change", toggleTarjeta);
+    tarjeta.addEventListener("change", toggleTarjeta);
+
+    toggleTarjeta(); // inicializa
+</script>
+}

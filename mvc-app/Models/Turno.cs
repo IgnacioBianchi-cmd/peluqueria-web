@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace TurneroApp.Models
 {
+    public enum MetodoPago
+    {
+        Efectivo,
+        Tarjeta
+    }
+
     public class Turno
     {
         public int Id { get; set; }
@@ -16,5 +22,12 @@ namespace TurneroApp.Models
         public DateTime? QrExpiracion { get; set; }
 
         public ICollection<TurnoServicio> TurnosServicios { get; set; } = new List<TurnoServicio>();
+
+        public MetodoPago MetodoPago { get; set; }
+
+        public int? TarjetaId { get; set; }
+        public Tarjeta? Tarjeta { get; set; }
+
+        public decimal MontoTotal { get; set; }
     }
 }
