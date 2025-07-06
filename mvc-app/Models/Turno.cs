@@ -12,7 +12,7 @@ namespace TurneroApp.Models
     public class Turno
     {
         public int Id { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; } = string.Empty;
         public Usuario Usuario { get; set; } = null!;
 
         public DateTime FechaHora { get; set; }
@@ -20,14 +20,14 @@ namespace TurneroApp.Models
 
         public string QrToken { get; set; } = string.Empty;
         public DateTime? QrExpiracion { get; set; }
-
-        public ICollection<TurnoServicio> TurnosServicios { get; set; } = new List<TurnoServicio>();
+        public bool QrActivo { get; set; } = true;
 
         public MetodoPago MetodoPago { get; set; }
-
         public int? TarjetaId { get; set; }
         public Tarjeta? Tarjeta { get; set; }
 
         public decimal MontoTotal { get; set; }
+
+        public ICollection<TurnoServicio> TurnosServicios { get; set; } = new List<TurnoServicio>();
     }
 }

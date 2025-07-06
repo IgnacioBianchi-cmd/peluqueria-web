@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TurneroApp.Models; // Importante: usar tu namespace de modelos
+using TurneroApp.Models;
 
 namespace mvc_app.Data;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<Usuario>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Servicio> Servicios { get; set; } = null!;
     public DbSet<Tarjeta> Tarjetas { get; set; } = null!;
+    public DbSet<Turno> Turnos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -30,8 +31,13 @@ public class ApplicationDbContext : IdentityDbContext
         );
 
         builder.Entity<Tarjeta>()
-            .HasOne<IdentityUser>()
+            .HasOne<Usuario>()
             .WithMany()
+            .HasForeignKey(t => t.UsuarioId);
+
+        builder.Entity<Turno>()
+            .HasOne(t => t.Usuario)
+            .WithMany(u => u.Turnos)
             .HasForeignKey(t => t.UsuarioId);
     }
 }

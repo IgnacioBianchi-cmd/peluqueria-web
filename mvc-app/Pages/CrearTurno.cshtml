@@ -1,3 +1,4 @@
+
 @page
 @model CrearTurnoModel
 @using Microsoft.AspNetCore.Identity
@@ -19,7 +20,11 @@
 
     <div>
         <label>Fecha y hora del turno:</label>
-        <input type="datetime-local" asp-for="FechaHora" min="@minDate" required />
+        <input type="datetime-local"
+               asp-for="FechaHora"
+               min="@minDate"
+               value="@Model.FechaHora.ToString("yyyy-MM-ddTHH:mm")"
+               required />
     </div>
 
     <div>

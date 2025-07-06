@@ -7,7 +7,6 @@ using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System;
 
 public class ConfirmacionTurnoModel : PageModel
 {
@@ -41,8 +40,9 @@ public class ConfirmacionTurnoModel : PageModel
         if (!string.IsNullOrEmpty(Turno.QrToken))
         {
             using var qrGenerator = new QRCodeGenerator();
-            using var qrData = qrGenerator.CreateQrCode(Turno.QrToken, QRCodeGenerator.ECCLevel.Q);
-            using var qrCode = new QRCode(qrData);
+            var url = $"http://localhost:5247/VerificarQR?token={Turno.QrToken}";
+            using var qrData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            using var qrCode = new QRCoder.QRCode(qrData);
             using var bitmap = qrCode.GetGraphic(20);
             using var ms = new MemoryStream();
             bitmap.Save(ms, ImageFormat.Png);

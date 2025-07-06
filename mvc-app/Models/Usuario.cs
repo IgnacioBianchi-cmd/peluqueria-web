@@ -1,16 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace TurneroApp.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
-        public int Id { get; set; }
-        public string NombreCompleto { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
-        public string PasswordSalt { get; set; } = string.Empty;
-        public string Rol { get; set; } = string.Empty; // "cliente" o "admin"
-
+        public string NombreCompleto { get; set; } = "";
+        public string Rol { get; set; } = "cliente";
         public ICollection<Turno> Turnos { get; set; } = new List<Turno>();
     }
 }

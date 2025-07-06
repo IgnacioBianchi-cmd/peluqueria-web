@@ -11,9 +11,9 @@ using System.ComponentModel.DataAnnotations;
 public class CrearTurnoModel : PageModel
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<Usuario> _userManager;
 
-    public CrearTurnoModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    public CrearTurnoModel(ApplicationDbContext context, UserManager<Usuario> userManager)
     {
         _context = context;
         _userManager = userManager;
@@ -103,7 +103,7 @@ public class CrearTurnoModel : PageModel
 
         var turno = new Turno
         {
-            UsuarioId = int.Parse(user.Id), // Asumiendo que IdentityUser.Id es convertible
+            UsuarioId = user.Id, 
             FechaHora = FechaHora,
             Confirmado = false,
             MetodoPago = MetodoPago,

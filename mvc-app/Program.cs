@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using mvc_app.Data;
+using TurneroApp.Models;
 using TurneroApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,16 +16,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<Usuario>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// REGISTRO del servicio para envío de correos (Mailtrap)
+// REGISTRO del servicio para envï¿½o de correos (Mailtrap)
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AuthorizeAreaFolder("Identity", "/Account");
+    options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Login");
+    options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Register");
+});
 
 var app = builder.Build();
 
