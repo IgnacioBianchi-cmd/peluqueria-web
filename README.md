@@ -16,6 +16,21 @@ Sistema de gestión de turnos para peluquería/estética.
 
 ## Cómo correr el proyecto
 
+Es necesario crear appsettings.Development.json
+En la carpeta mvc-app, creá un archivo appsettings.Development.json con este contenido:
+
+{
+  "Smtp": {
+    "Host": "sandbox.smtp.mailtrap.io",
+    "Port": 587,
+    "Username": "TU_USERNAME",
+    "Password": "TU_PASSWORD",
+    "From": "no-reply@turneroapp.com"
+  }
+}
+
+Obtené tus credenciales en https://mailtrap.io
+
 ```bash
 cd mvc-app
 dotnet ef database update
