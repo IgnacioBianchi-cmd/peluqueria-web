@@ -95,6 +95,7 @@ namespace TurneroApp.Controllers
             using var hmac = new HMACSHA512(Convert.FromBase64String(storedSalt));
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return Convert.ToBase64String(computedHash) == storedHash;
+            //con esto se verifica que el hash de la contraseña ingresada coincida con el hash almacenado
         }
     }
 }
