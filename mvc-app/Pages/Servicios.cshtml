@@ -2,23 +2,58 @@
 @model ServiciosModel
 @{
     ViewData["Title"] = "Seleccionar servicios";
+
+    // Descripciones extendidas
+    var descripciones = new Dictionary<string, string>
+    {
+        { "Corte de pelo", "Incluye lavado, corte a elección (clásico o moderno) y peinado final." },
+        { "Teñido", "Coloración completa del cabello o aplicación de mechas según preferencia." },
+        { "Barbería", "Afeitado profesional con toalla caliente, recorte y diseño de barba." },
+        { "Manicura", "Cuidado de uñas, limado, cutículas y esmaltado con opción de nail art." },
+        { "Pedicura", "Tratamiento integral de pies, exfoliación, corte y esmaltado de uñas." }
+    };
 }
+
 
 <h1>Seleccioná los servicios que deseas reservar</h1>
 
 <form method="post">
     <div>
         @foreach (var servicio in Model.Servicios)
-        {
-            <div>
-                <input type="checkbox" name="ServiciosSeleccionados" value="@servicio.Id" id="servicio_@servicio.Id" />
-                <label for="servicio_@servicio.Id">
-                    <strong>@servicio.Nombre</strong> - @servicio.Descripcion<br />
-                    Precio: $@servicio.Precio - Duración: @servicio.Duracion.TotalMinutes minutos
-                </label>
-            </div>
-        }
-    </div>
+{
+        <div class="mb-3 border p-2 rounded">
+            <input type="checkbox" name="ServiciosSeleccionados" value="@servicio.Id" id="servicio_@servicio.Id" />
+            <label for="servicio_@servicio.Id">
+                <strong>@servicio.Nombre</strong> - @servicio.Descripcion<br />
+                Precio: $@servicio.Precio - Duración: @servicio.Duracion.TotalMinutes minutos
+            </label>
 
-    <button type="submit">Continuar</button>
+            <button type="button" class="btn btn-link" onclick="mostrarDetalle(@servicio.Id)">Ver detalles</button>
+
+            <div id="detalle_@servicio.Id" style="display:none; margin-top:10px;" class="bg-light p-2 rounded">
+                <strong>Detalles del servicio:</strong><br />
+                <p><strong>Nombre:</strong> @servicio.Nombre</p>
+                <p><strong>Descripción:</strong> @servicio.Descripcion</p>
+                <p><strong>Precio:</strong> $@servicio.Precio</p>
+                <p><strong>Duración:</strong> @servicio.Duracion.TotalMinutes minutos</p>
+
+                @if (descripciones.ContainsKey(servicio.Nombre))
+            {
+                <p><strong>Info adicional:</strong> @descripciones[servicio.Nombre]</p>
+            }
+            </div>
+        </div>
+}
+
+
+        <button type="submit">Continuar</button>
 </form>
+
+@section Scripts {
+    <script>
+        function mostrarDetalle(id) {
+            const div = document.getElementById('detalle_' + id);
+            div.style.display = (div.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+}
