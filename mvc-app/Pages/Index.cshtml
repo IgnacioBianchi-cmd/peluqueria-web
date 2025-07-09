@@ -1,12 +1,23 @@
-﻿@page
+
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center mt-5">
+    <h1 class="display-4 mb-4">Bienvenido a tu Peluquería Ideal</h1>
+    <p class="lead mb-5">Expertos en estilo, cuidado personal y el mejor ambiente para tu transformación.</p>
 
-    <a class="btn btn-primary mt-3" href="/Servicios">Ir a Servicios</a>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <img src="/images/barber1.jpg" class="img-fluid rounded shadow object-fit-cover" style="height: 300px; width: 100%;" alt="Barber 1">
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="/images/barber2.jpg" class="img-fluid rounded shadow object-fit-cover" style="height: 300px; width: 100%;" alt="Barber 2">
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="/images/barber3.jpg" class="img-fluid rounded shadow object-fit-cover" style="height: 300px; width: 100%;" alt="Barber 3">
+        </div>
+    </div>
 </div>
