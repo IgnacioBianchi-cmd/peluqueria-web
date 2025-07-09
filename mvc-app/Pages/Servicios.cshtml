@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Seleccionar servicios";
 
-    // Descripciones extendidas
     var descripciones = new Dictionary<string, string>
     {
         { "Corte de pelo", "Incluye lavado, corte a elección (clásico o moderno) y peinado final." },
@@ -12,48 +11,119 @@
         { "Manicura", "Cuidado de uñas, limado, cutículas y esmaltado con opción de nail art." },
         { "Pedicura", "Tratamiento integral de pies, exfoliación, corte y esmaltado de uñas." }
     };
+
+    var imagenes = new Dictionary<string, string>
+    {
+        { "Corte de pelo", "corte.jpg" },
+        { "Teñido", "tenido.jpg" },
+        { "Barbería", "barberia.jpg" },
+        { "Manicura", "manicura.webp" },
+        { "Pedicura", "pedicura.jpg" }
+    };
 }
 
+<h1 class="mb-5 text-center">Seleccioná los servicios que deseas reservar</h1>
 
-<h1>Seleccioná los servicios que deseas reservar</h1>
-
-<form method="post">
-    <div>
+<form method="post" onsubmit="return validarSeleccion();">
+    <div class="row">
         @foreach (var servicio in Model.Servicios)
-{
-        <div class="mb-3 border p-2 rounded">
-            <input type="checkbox" name="ServiciosSeleccionados" value="@servicio.Id" id="servicio_@servicio.Id" />
-            <label for="servicio_@servicio.Id">
-                <strong>@servicio.Nombre</strong> - @servicio.Descripcion<br />
-                Precio: $@servicio.Precio - Duración: @servicio.Duracion.TotalMinutes minutos
-            </label>
+        {
+            var img = imagenes.ContainsKey(servicio.Nombre) ? imagenes[servicio.Nombre] : "default.jpg";
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm bg-dark text-light border border-secondary">
+                <img src="~/images/@img" class="card-img-top" alt="@servicio.Nombre" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="ServiciosSeleccionados" value="@servicio.Id" id="servicio_@servicio.Id" />
+                        <label class="form-check-label" for="servicio_@servicio.Id">
+                            <h5 class="card-title">@servicio.Nombre</h5>
+                        </label>
+                    </div>
+                    <p class="card-text">
+                        <strong>Descripción:</strong> @servicio.Descripcion<br />
+                        <strong>Precio:</strong> $@servicio.Precio<br />
+                        <strong>Duración:</strong> @servicio.Duracion.TotalMinutes minutos
+                    </p>
+                    <button type="button" class="btn btn-outline-info btn-sm mt-2"
+                            onclick="toggleDetalle(@servicio.Id, this)" id="btnDetalle_@servicio.Id">
+                        Ver detalles
+                    </button>
 
-            <button type="button" class="btn btn-link" onclick="mostrarDetalle(@servicio.Id)">Ver detalles</button>
+                    <div id="detalle_@servicio.Id" class="detalle-servicio transition-collapse bg-secondary text-light mt-3 rounded">
+                        <div class="p-3">
+                            <strong>Detalles del servicio:</strong><br />
+                            <p><strong>Nombre:</strong> @servicio.Nombre</p>
+                            <p><strong>Descripción:</strong> @servicio.Descripcion</p>
+                            <p><strong>Precio:</strong> $@servicio.Precio</p>
+                            <p><strong>Duración:</strong> @servicio.Duracion.TotalMinutes minutos</p>
 
-            <div id="detalle_@servicio.Id" style="display:none; margin-top:10px;" class="bg-light p-2 rounded">
-                <strong>Detalles del servicio:</strong><br />
-                <p><strong>Nombre:</strong> @servicio.Nombre</p>
-                <p><strong>Descripción:</strong> @servicio.Descripcion</p>
-                <p><strong>Precio:</strong> $@servicio.Precio</p>
-                <p><strong>Duración:</strong> @servicio.Duracion.TotalMinutes minutos</p>
-
-                @if (descripciones.ContainsKey(servicio.Nombre))
-            {
-                <p><strong>Info adicional:</strong> @descripciones[servicio.Nombre]</p>
-            }
+                            @if (descripciones.ContainsKey(servicio.Nombre))
+                            {
+                            <p><strong>Info adicional:</strong> @descripciones[servicio.Nombre]</p>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-}
+        }
+    </div>
 
-
-        <button type="submit">Continuar</button>
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-outline-info">Continuar</button>
+    </div>
 </form>
 
 @section Scripts {
+    <style>
+        .transition-collapse {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            transition: all 0.4s ease;
+        }
+
+            .transition-collapse.active {
+                max-height: 600px; 
+                opacity: 1;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+    </style>
+
     <script>
-        function mostrarDetalle(id) {
-            const div = document.getElementById('detalle_' + id);
-            div.style.display = (div.style.display === 'none') ? 'block' : 'none';
+        function toggleDetalle(id, btn) {
+            document.querySelectorAll('.detalle-servicio').forEach(div => {
+                if (div.id !== 'detalle_' + id) {
+                    div.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('button[id^="btnDetalle_"]').forEach(b => {
+                if (b !== btn) b.innerText = "Ver detalles";
+            });
+
+            const detalle = document.getElementById('detalle_' + id);
+            const isActive = detalle.classList.contains('active');
+
+            if (isActive) {
+                detalle.classList.remove('active');
+                btn.innerText = "Ver detalles";
+            } else {
+                detalle.classList.add('active');
+                btn.innerText = "Ocultar detalles";
+            }
+        }
+
+        function validarSeleccion() {
+            const seleccionados = document.querySelectorAll('input[name="ServiciosSeleccionados"]:checked');
+            if (seleccionados.length === 0) {
+                alert("Por favor, selecciona al menos un servicio para continuar.");
+                return false;
+            }
+            return true;
         }
     </script>
 }

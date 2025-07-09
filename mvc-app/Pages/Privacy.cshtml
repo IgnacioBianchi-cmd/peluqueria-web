@@ -1,8 +1,74 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Sobre nosotros";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container my-5">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <div class="text-center mb-5">
+        <h3 class="fst-italic text-info">"Transformamos estilo en confianza"</h3>
+    </div>
+
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <p class="fs-5">
+                <strong>Aura Hair Studio</strong> nació en 2025 con la misión de redefinir el estilo personal
+                a través de servicios profesionales de belleza y cuidado. En nuestro estudio, no solo nos enfocamos en el look,
+                sino también en brindar una experiencia relajante, moderna y a la medida de cada cliente.
+            </p>
+            <p class="fs-5">
+                Nuestro equipo de expertos se capacita constantemente para ofrecerte lo último en tendencias y técnicas,
+                combinando arte, detalle y pasión en cada servicio.
+            </p>
+        </div>
+        <div class="col-md-6 text-center">
+            <!-- Imagen del salón -->
+            <img src="~/images/salon.jpg" alt="Nuestro salón" class="img-fluid rounded shadow" style="max-height: 300px;">
+        </div>
+    </div>
+
+    <hr class="my-5" style="border-top: 1px solid #444;" />
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-4">
+            <img src="~/images/corte.jpg" alt="Corte de Pelo" class="img-fluid rounded mb-3 shadow" style="height: 200px; object-fit: cover;">
+            <h4>Corte de Pelo</h4>
+            <p>Estilos modernos, clásicos o personalizados. ¡Transformá tu imagen con nosotros!</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="~/images/tenido.jpg" alt="Teñido" class="img-fluid rounded mb-3 shadow" style="height: 200px; object-fit: cover;">
+            <h4>Teñido</h4>
+            <p>Colores vibrantes, naturales o fantasía. Calidad profesional que cuida tu cabello.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="~/images/barberia.jpg" alt="Barbería" class="img-fluid rounded mb-3 shadow" style="height: 200px; object-fit: cover;">
+            <h4>Barbería</h4>
+            <p>Afeitado clásico, perfilado, degradados y más, en un ambiente cómodo y estilizado.</p>
+        </div>
+    </div>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-6 mb-4">
+            <img src="~/images/manicura.webp" alt="Manicura" class="img-fluid rounded mb-3 shadow" style="height: 200px; object-fit: cover;">
+            <h4>Manicura</h4>
+            <p>Desde lo clásico hasta diseños artísticos. Cuidamos tus manos con detalle.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <img src="~/images/pedicura.jpg" alt="Pedicura" class="img-fluid rounded mb-3 shadow" style="height: 200px; object-fit: cover;">
+            <h4>Pedicura</h4>
+            <p>Bienestar y estética para tus pies. Relajate y dejalos en nuestras manos.</p>
+        </div>
+    </div>
+
+    <hr class="my-5" style="border-top: 1px solid #444;" />
+
+    <div class="text-center mt-5">
+        <h4>¿Querés saber más o agendar tu turno?</h4>
+        <p class="fs-5">
+            Escribinos a <a href="mailto:aurahaircontacto@gmail.com" class="text-info">aurahaircontacto@gmail.com</a>
+        </p>
+        <p class="fs-6 text-muted">Te responderemos lo antes posible.</p>
+    </div>
+</div>
