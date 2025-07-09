@@ -18,15 +18,20 @@ else
             <th>Fecha</th>
             <th>Servicios</th>
             <th>Total</th>
+            <th>QR</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var turno in Model.Turnos)
+        @foreach (var item in Model.Turnos)
         {
+            var turno = item.Turno;
         <tr>
             <td>@turno.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
             <td>@string.Join(", ", turno.TurnosServicios.Select(s => s.Servicio.Nombre))</td>
             <td>$@turno.MontoTotal</td>
+            <td>
+                <img src="@item.QrBase64" alt="QR del turno" style="width: 100px;" />
+            </td>
         </tr>
         }
     </tbody>
