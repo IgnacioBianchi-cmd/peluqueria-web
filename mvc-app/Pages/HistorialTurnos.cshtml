@@ -1,0 +1,34 @@
+@page
+@model mvc_app.Pages.HistorialTurnosModel
+@{
+    ViewData["Title"] = "Historial de Turnos";
+}
+
+<h2>Historial de Turnos</h2>
+
+@if (!Model.Turnos.Any())
+{
+<p>No tenés turnos registrados.</p>
+}
+else
+{
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Servicios</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var turno in Model.Turnos)
+        {
+        <tr>
+            <td>@turno.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@string.Join(", ", turno.TurnosServicios.Select(s => s.Servicio.Nombre))</td>
+            <td>$@turno.MontoTotal</td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
