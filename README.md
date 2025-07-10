@@ -123,7 +123,8 @@ turnero-peluqueria/
 ├── mvc-app/                 # Web pública para clientes (Razor Pages)
 ├── Spa-React/               # SPA profesional en React
 ├── /db/                     # Migraciones EF Core
-├── /videos/                 # Video demostrativo del proyecto
+├── /Capturas/               # Capturas demostrativas del proyecto
+├── /Videos/                 # Video demostrativo del proyecto
 └── README.md                # Este archivo
 ```
 
