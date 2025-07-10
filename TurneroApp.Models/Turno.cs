@@ -17,6 +17,7 @@ namespace TurneroApp.Models
 
         public DateTime FechaHora { get; set; }
         public bool Confirmado { get; set; }
+        public string Estado { get; set; } = "pendiente";
 
         public string QrToken { get; set; } = string.Empty;
         public DateTime? QrExpiracion { get; set; }

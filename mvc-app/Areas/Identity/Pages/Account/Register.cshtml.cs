@@ -153,6 +153,8 @@ namespace mvc_app.Areas.Identity.Pages.Account
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                    Console.WriteLine("Error: " + string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+
                 }
             }
 

@@ -1,58 +1,40 @@
-import { useState } from 'react'
-import api from './api'
+// src/Login.tsx
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginAdmin } from './api';
 
-type LoginProps = {
-  setToken: (token: string) => void
-  setEmail: (email: string) => void
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const data = await loginAdmin(email, password);
+            if (data.rol !== 'admin') {
+                setError('Solo administradores pueden acceder');
+                return;
+            }
+            localStorage.setItem('token', data.token);
+            navigate('/dashboard');
+        } catch (err) {
+            setError('Error al iniciar sesión');
+        }
+    };
+
+    return (
+        <div style={{ padding: 32 }}>
+            <h2>Login Administrador</h2>
+            <form onSubmit={handleSubmit}>
+                <input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                <br />
+                <input placeholder="Contraseña" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <br />
+                <button type="submit">Ingresar</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+            </form>
+        </div>
+    );
 }
-
-const Login = ({ setToken, setEmail }: LoginProps) => {
-  const [email, setEmailInput] = useState('')
-  const [password, setPassword] = useState('')
-  const [mensaje, setMensaje] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setMensaje('')
-    try {
-      const res = await api.post('/auth/login', { email, password })
-      setToken(res.data.token)
-      setEmail(res.data.email)
-    } catch {
-      setMensaje('Credenciales inválidas')
-    }
-  }
-
-  return (
-    <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-blue-700 mb-6">Iniciar sesión</h2>
-      <form onSubmit={handleSubmit} className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow p-6 flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmailInput(e.target.value)}
-          required
-          className="p-2 rounded border border-gray-300 dark:border-gray-600"
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-          className="p-2 rounded border border-gray-300 dark:border-gray-600"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition"
-        >
-          Entrar
-        </button>
-        {mensaje && <p className="text-center text-red-600 dark:text-red-400">{mensaje}</p>}
-      </form>
-    </div>
-  )
-}
-
-export default Login

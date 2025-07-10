@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace TurneroApp.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<Usuario>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -16,6 +17,10 @@ namespace TurneroApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TurnoServicio>().ToTable("TurnoServicio"); 
+
             modelBuilder.Entity<TurnoServicio>()
                 .HasKey(ts => new { ts.TurnoId, ts.ServicioId });
 
@@ -29,5 +34,6 @@ namespace TurneroApp.Models
                 .WithMany(s => s.TurnosServicios)
                 .HasForeignKey(ts => ts.ServicioId);
         }
+
     }
 }

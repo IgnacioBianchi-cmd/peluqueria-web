@@ -8,5 +8,6 @@ namespace TurneroApp.Models
         public string NombreCompleto { get; set; } = "";
         public string Rol { get; set; } = "cliente";
         public ICollection<Turno> Turnos { get; set; } = new List<Turno>();
+        public string PasswordSalt { get; set; } = string.Empty;
     }
 }
