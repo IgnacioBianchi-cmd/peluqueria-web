@@ -1,4 +1,3 @@
-// src/Navegacion.tsx
 import { useNavigate } from 'react-router-dom';
 
 export default function Navegacion() {
@@ -10,27 +9,17 @@ export default function Navegacion() {
     };
 
     return (
-        <header style={estiloHeader}>
-            <h2 style={{ margin: 0 }}>Admin Peluquería</h2>
-            <button onClick={logout} style={estiloBoton}>Cerrar sesión</button>
+        <header className="bg-gradient-to-r from-purple-900 via-slate-900 to-blue-900 shadow-lg px-6 py-4 flex items-center justify-between border-b border-white/10">
+            <h2 className="text-xl font-bold text-white tracking-wide m-0 select-none">
+                Admin PeluquerÃ­a
+            </h2>
+            <button
+                onClick={logout}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            >
+                Cerrar sesiÃ³n
+            </button>
         </header>
     );
 }
-
-const estiloHeader: React.CSSProperties = {
-    backgroundColor: '#333',
-    color: '#fff',
-    padding: '10px 20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-};
-
-const estiloBoton: React.CSSProperties = {
-    background: '#fff',
-    color: '#333',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: 4,
-    cursor: 'pointer',
-};
+    

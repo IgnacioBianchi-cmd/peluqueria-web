@@ -15,12 +15,14 @@ export default function Dashboard() {
     }, [navigate]);
 
     return (
-        <div>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
             <Navegacion />
-            <div style={{ padding: '20px' }}>
-                <h1>Panel de Administrador</h1>
-                <TurnosHoyManiana />
-            </div>
+            <main className="max-w-4xl mx-auto mt-10 px-4">
+                <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
+                    <h1 className="text-3xl font-bold text-white mb-6 text-center drop-shadow">Panel de Administrador</h1>
+                    <TurnosHoyManiana />
+                </div>
+            </main>
         </div>
     );
 }
